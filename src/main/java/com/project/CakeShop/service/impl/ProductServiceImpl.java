@@ -9,7 +9,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() {
-        return null;
+    public ArrayList<Product> getProducts() {
+        return (ArrayList<Product>) productRepository.findAll();
     }
 }

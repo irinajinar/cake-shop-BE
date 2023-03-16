@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -28,10 +30,16 @@ public class ProductController {
 
     }
 
-    @GetMapping(path="/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id){
-        Product product= productService.getProduct(id);
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+        Product product = productService.getProduct(id);
         return ResponseEntity.ok(product);
+    }
+
+    @GetMapping
+    public ResponseEntity<ArrayList<Product>> getProducts() {
+        ArrayList<Product> products = productService.getProducts();
+        return ResponseEntity.ok(products);
     }
 
     @DeleteMapping(path = "/{id}")
