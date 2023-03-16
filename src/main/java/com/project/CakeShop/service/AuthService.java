@@ -5,7 +5,7 @@ import com.project.CakeShop.model.dto.UserLoginDto;
 import com.project.CakeShop.model.dto.UserRegisterDto;
 
 public interface AuthService {
-    User register(UserRegisterDto userRegisterDto) throws Exception;
+    User register(UserRegisterDto userRegisterDto);
 
-    User login(UserLoginDto userLoginDto) throws Exception;
+    User login(UserLoginDto userLoginDto);
 }

@@ -24,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public User register(UserRegisterDto userRegisterDto) throws BusinessException {
+    public User register(UserRegisterDto userRegisterDto){
         if(Objects.isNull(userRegisterDto)){
             throw new BusinessException(401, "Body is null");
         }
@@ -61,7 +61,7 @@ public class AuthServiceImpl implements AuthService {
         return userRepository.save(user);
     }
 
-    public User login(UserLoginDto userLoginDto) throws BusinessException{
+    public User login(UserLoginDto userLoginDto) {
         if(Objects.isNull(userLoginDto)){
             throw new BusinessException(401, "Body is null!");
         }
