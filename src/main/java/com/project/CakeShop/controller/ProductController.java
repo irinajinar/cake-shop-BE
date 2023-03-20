@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProductController {
 
     @Autowired

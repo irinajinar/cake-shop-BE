@@ -21,13 +21,13 @@ public class ProductServiceImpl implements ProductService {
 
     public Product addProduct(ProductDto productDto) {
         if (Objects.isNull(productDto)) {
-            throw new BusinessException(401, "Body is null");
+            throw new BusinessException(400, "Body is null");
         }
         if (Objects.isNull(productDto.getName())) {
             throw new BusinessException(400, "The name is not valid!");
         }
         if (!Objects.isNull(productRepository.findByName(productDto.getName()))) {
-            throw new BusinessException(401, "The product name is taken");
+            throw new BusinessException(400, "The product name is taken");
         }
         if (Objects.isNull(productDto.getPrice()) && (productDto.getPrice() < 0)) {
             throw new BusinessException(400, "The price is not valid!");
@@ -35,11 +35,15 @@ public class ProductServiceImpl implements ProductService {
         if (Objects.isNull(productDto.getQuantity()) && (productDto.getQuantity() < 0)) {
             throw new BusinessException(400, "Quantity is not valid!");
         }
+        if (Objects.isNull(productDto.getDescription())) {
+            throw new BusinessException(400, "Description is not valid!");
+        }
         Product product = new Product();
         product.setProductType(productDto.getProductType());
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setQuantity(productDto.getQuantity());
+        product.setDescription(productDto.getDescription());
         return productRepository.save(product);
 
     }
@@ -53,6 +57,9 @@ public class ProductServiceImpl implements ProductService {
         if (Objects.isNull(productDto.getName())) {
             throw new BusinessException(400, "The name is not valid!");
         }
+        if(Objects.isNull(productDto.getDescription())){
+            throw new BusinessException(400, "Product description is not valid!");
+        }
 
         if (Objects.isNull((productDto.getPrice())) && (productDto.getPrice() < 0)) {
             throw new BusinessException(400, "The price is not valid!");
@@ -65,13 +72,14 @@ public class ProductServiceImpl implements ProductService {
         product.setProductType(productDto.getProductType());
         product.setPrice(productDto.getPrice());
         product.setQuantity(productDto.getQuantity());
+        product.setDescription(productDto.getDescription());
         return productRepository.save(product);
     }
 
     @Override
     public void delete(Long id) {
         if (productRepository.findById(id).isEmpty()) {
-            throw new BusinessException(401, "Product not find!");
+            throw new BusinessException(404, "Product not found!");
         }
         productRepository.deleteById(id);
     }
@@ -80,7 +88,7 @@ public class ProductServiceImpl implements ProductService {
     public Product getProduct(Long id) {
         Optional<Product> optionalProduct = productRepository.findById(id);
         if (optionalProduct.isEmpty()) {
-            throw new BusinessException(401, "Product not find!");
+            throw new BusinessException(404, "Product not found!");
         }
         return optionalProduct.get();
     }

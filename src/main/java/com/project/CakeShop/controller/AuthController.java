@@ -6,12 +6,10 @@ import com.project.CakeShop.model.dto.UserRegisterDto;
 import com.project.CakeShop.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthController {
     @Autowired
     private AuthService authService;
@@ -22,7 +20,7 @@ public class AuthController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping(path = "/login")
+    @PostMapping(path = "/login")
     public ResponseEntity<User> login(@RequestBody UserLoginDto userLoginDto) throws Exception{
         return ResponseEntity.ok(authService.login(userLoginDto));
     }
