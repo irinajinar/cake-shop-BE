@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -28,6 +29,9 @@ public class Product {
 
     @Column(nullable = false)
     private String description;
+
+    @ManyToMany(mappedBy = "cartProducts")
+    Set<Cart> carts;
 
 
 

@@ -1,9 +1,11 @@
 package com.project.CakeShop.service.impl;
 
 import com.project.CakeShop.exception.BusinessException;
+import com.project.CakeShop.model.Cart;
 import com.project.CakeShop.model.User;
 import com.project.CakeShop.model.dto.UserLoginDto;
 import com.project.CakeShop.model.dto.UserRegisterDto;
+import com.project.CakeShop.repository.CartRepository;
 import com.project.CakeShop.repository.UserRepository;
 import com.project.CakeShop.service.AuthService;
 import lombok.Data;
@@ -22,6 +24,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private CartRepository cartRepository;
 
     @Override
     public User register(UserRegisterDto userRegisterDto){
@@ -58,6 +63,10 @@ public class AuthServiceImpl implements AuthService {
         user.setEmail(userRegisterDto.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(userRegisterDto.getPassword()));
         user.setTelephoneNumber(userRegisterDto.getTelephoneNumber());
+        Cart cart = new Cart();
+        cart.setUser(user);
+        user.setCart(cart);
+
         return userRepository.save(user);
     }
 
