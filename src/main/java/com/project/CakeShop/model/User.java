@@ -1,5 +1,6 @@
 package com.project.CakeShop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +13,6 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //to do strategy and understand it
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -32,5 +32,10 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @JsonBackReference
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Cart cart;
+
 
 }
