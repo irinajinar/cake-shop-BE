@@ -1,5 +1,6 @@
 package com.project.CakeShop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class Cart {
     private User user;
 
     @ManyToMany
+    @JsonBackReference
     @JoinTable(
             name = "cart_products",
             joinColumns = @JoinColumn(name = "cart_id"),

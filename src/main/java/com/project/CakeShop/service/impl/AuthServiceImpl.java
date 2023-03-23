@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public User register(UserRegisterDto userRegisterDto){
         if(Objects.isNull(userRegisterDto)){
-            throw new BusinessException(401, "Body is null");
+            throw new BusinessException(400, "Body is null");
         }
         if(userRegisterDto.getFirstName().isEmpty()){
             throw new BusinessException(400, "First name can't be empty!");
@@ -49,11 +49,11 @@ public class AuthServiceImpl implements AuthService {
             throw new BusinessException (400, "Telephone number is not valid!");
         }
 
-        if (bCryptPasswordEncoder.encode(userRegisterDto.getPassword()).isEmpty()) {
+        if (userRegisterDto.getPassword().isEmpty()) {
             throw new BusinessException(400, "Password cannot be null !");
         }
         if(!Objects.isNull(userRepository.findByEmail(userRegisterDto.getEmail()))){
-            throw new BusinessException(401,"Email already exist!");
+            throw new BusinessException(400,"Email already exist!");
         }
 
         User user= new User();
@@ -72,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
 
     public User login(UserLoginDto userLoginDto) {
         if(Objects.isNull(userLoginDto)){
-            throw new BusinessException(401, "Body is null!");
+            throw new BusinessException(400, "Body is null!");
         }
         if(Objects.isNull(userLoginDto.getEmail())){
             throw new BusinessException(400, "Email can't be null!");
@@ -82,10 +82,10 @@ public class AuthServiceImpl implements AuthService {
         }
         User user = userRepository.findByEmail(userLoginDto.getEmail());
         if(Objects.isNull(user)){
-            throw new BusinessException(401, "The data entered is not correct!");
+            throw new BusinessException(400, "The data entered is not correct!");
         }
         if(!bCryptPasswordEncoder.matches(userLoginDto.getPassword(), user.getPassword())){
-            throw new BusinessException(403, "Email or password is incorrect!");
+            throw new BusinessException(400, "Email or password is incorrect!");
         }
         return user;
     }

@@ -12,4 +12,7 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
 
     Optional<Cart> findByUserId(Long userId);
 
+    void deleteAllProductsById(Long id);
+
+
 }
