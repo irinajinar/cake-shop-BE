@@ -1,5 +1,6 @@
 package com.project.CakeShop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,8 +32,10 @@ public class Product {
     private String description;
 
     @ManyToMany(mappedBy = "cartProducts")
+    @JsonBackReference
     Set<Cart> carts;
 
-
+    @OneToMany(mappedBy = "product")
+    private Set<OrderedProduct> orderedProducts;
 
 }
